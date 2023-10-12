@@ -1,12 +1,38 @@
 <script>
+import axios from 'axios';
+import { store } from './data/store';
+import Header from './components/Header.vue';
+
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    Header
+  },
+  data(){
+    return{
+      store
+    }
+  },
+  methods:{
+    getApi(){
+      axios.get(store.apiUrl)
+      .then(res => {
+        store.list = res.data;
+        console.log(store.list);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+  },
+  mounted(){
+    this.getApi();
+  }
 }
 </script>
 
 <template>
-  <h1>Vite Yu-Gi-Oh</h1>
-  
+  <Header title="Yu-Gi-Oh Api" />
 </template>
 
 <style lang="scss">
